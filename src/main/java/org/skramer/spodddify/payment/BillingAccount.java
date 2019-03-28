@@ -1,19 +1,23 @@
 package org.skramer.spodddify.payment;
 
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.skramer.spodddify.payment.event.BillingAccountCharged;
+import org.skramer.spodddify.payment.event.BillingAccountCreatedEvent;
 
 @Aggregate
+@Getter(AccessLevel.PACKAGE)
+@NoArgsConstructor
 class BillingAccount {
     @AggregateIdentifier
-    private String accoundId;
+    private String accountId;
     private long balance;
-
-    public BillingAccount() {
-    }
 
     @CommandHandler
     public BillingAccount(CreateBillingAccountCommand cmd) {
@@ -22,10 +26,12 @@ class BillingAccount {
 
     @EventHandler
     public void on(BillingAccountCreatedEvent evt) {
-        accoundId = evt.getBillingAccountId();
+        accountId = evt.getAccountId();
         balance = evt.getBalance();
     }
 
-//    void charge(long chargeAmount) {
-//    }
+    @EventHandler
+    public void on(BillingAccountCharged evt) {
+        balance -= evt.getChargeAmount();
+    }
 }

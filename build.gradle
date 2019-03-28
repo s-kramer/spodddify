@@ -4,6 +4,7 @@ buildscript {
     }
     repositories {
         mavenCentral()
+        mavenLocal()
     }
     dependencies {
         classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
@@ -34,5 +35,9 @@ dependencies {
     compile group: 'org.axonframework', name: 'axon-spring', version: '4.0.3'
     testCompile group: 'org.axonframework', name: 'axon-test', version: '4.0.3'
     compile group: 'org.axonframework', name: 'axon-eventsourcing', version: '4.0.3'
+    
+    // self
+    compile project(':spodddify-api')
+
 
 }
