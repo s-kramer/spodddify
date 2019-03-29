@@ -18,7 +18,8 @@ public class BillingAccountTest {
     @Before
     public void setUp() {
         fixture = new AggregateTestFixture<>(BillingAccount.class);
-        fixture.registerAnnotatedCommandHandler(new BillingAccountCommandHandler(fixture.getRepository()));
+        fixture.registerAnnotatedCommandHandler(
+                new BillingAccountCommandHandler(fixture.getRepository(), fixture.getEventBus()));
     }
 
     @Test
@@ -44,6 +45,6 @@ public class BillingAccountTest {
     public void shouldThrowExceptionWhenChargingInexistingAccount() {
         fixture.givenNoPriorActivity()
                 .when(new ChargeBillingAccountCommand(BILLING_ACCOUNT_ID, CHARGE_AMOUNT))
-                .expectEvents(new BillingAccountNotFoundEvent(BILLING_ACCOUNT_ID)) ;
+                .expectEvents(new BillingAccountNotFoundEvent(BILLING_ACCOUNT_ID));
     }
 }
