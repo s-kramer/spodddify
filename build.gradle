@@ -1,43 +1,9 @@
 buildscript {
-    ext {
-        springBootVersion = '2.1.2.RELEASE'
-    }
     repositories {
         mavenCentral()
         mavenLocal()
     }
-    dependencies {
-        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    }
 }
-
-apply plugin: 'java'
-apply plugin: 'org.springframework.boot'
-apply plugin: 'io.spring.dependency-management'
 
 group = 'org.skramer'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
-}
-
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'org.springframework.boot:spring-boot-starter-aop'
-    implementation 'org.springframework.boot:spring-boot-starter-validation'
-    runtimeOnly 'org.springframework.boot:spring-boot-devtools'
-    compileOnly 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-
-    // Axon
-    compile group: 'org.axonframework', name: 'axon-spring', version: '4.0.3'
-    testCompile group: 'org.axonframework', name: 'axon-test', version: '4.0.3'
-    compile group: 'org.axonframework', name: 'axon-eventsourcing', version: '4.0.3'
-    
-    // self
-    compile project(':spodddify-api')
-
-
-}

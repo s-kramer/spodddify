@@ -14,7 +14,7 @@ import org.skramer.spodddify.payment.event.BillingAccountCreatedEvent;
 @Aggregate
 @Getter(AccessLevel.PACKAGE)
 @NoArgsConstructor
-class BillingAccount {
+public class BillingAccount {
     @AggregateIdentifier
     private String accountId;
     private long balance;

@@ -1,3 +1,3 @@
-include ":spodddify-api"
 include 'spodddify-api'
+include 'axon-spodddify'
 
