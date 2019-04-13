@@ -11,8 +11,10 @@ import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.skramer.spodddify.payment.command.CreateBillingAccountCommand;
 import org.skramer.spodddify.payment.domain.PaymentPlan;
+import org.skramer.spodddify.payment.event.BillingAccountCharged;
 import org.skramer.spodddify.payment.event.BillingAccountCreatedEvent;
 
 public class BillingAccountTest {
@@ -23,7 +25,7 @@ public class BillingAccountTest {
     @Before
     public void setUp() {
         fixture = new AggregateTestFixture<>(BillingAccount.class);
-        fixture.registerAnnotatedCommandHandler(new BillingAccountCommandHandler(fixture.getRepository(), fixture.getEventBus()));
+        fixture.registerCommandTargetResolver(new ChargeBillingAccountCommandTargetResolver());
     }
 
     @Test
@@ -57,6 +59,13 @@ public class BillingAccountTest {
                                 andNoMore()
                         )
                 );
+    }
+
+    @Test
+    public void shouldNotChargeBillingAccountOnFreePaymentPlan() {
+        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
+                .when(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
+                .expectEvents(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.FREE.getFee()));
     }
 
 //    @Test

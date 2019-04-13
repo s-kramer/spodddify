@@ -8,6 +8,7 @@ import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.skramer.spodddify.payment.command.CreateBillingAccountCommand;
 import org.skramer.spodddify.payment.domain.PaymentPlan;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
@@ -29,15 +30,20 @@ public class BillingAccount {
         AggregateLifecycle.apply(new BillingAccountCreatedEvent(cmd.getBillingAccountId(), INITIAL_ACCOUNT_BALANCE, cmd.getPaymentPlan()));
     }
 
+    @CommandHandler
+    private void on(ChargeBillingAccountCommand cmd) {
+        AggregateLifecycle.apply(new BillingAccountCharged(accountId, paymentPlan.getFee()));
+    }
+
     @EventHandler
-    public void on(BillingAccountCreatedEvent evt) {
+    private void on(BillingAccountCreatedEvent evt) {
         accountId = evt.getAccountId();
         balance = evt.getBalance();
         paymentPlan = evt.getPaymentPlan();
     }
 
     @EventHandler
-    public void on(BillingAccountCharged evt) {
+    private void on(BillingAccountCharged evt) {
         balance -= evt.getChargeAmount();
     }
 }
