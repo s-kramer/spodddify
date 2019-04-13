@@ -82,6 +82,25 @@ public class BillingAccountTest {
                 .expectState(ba -> assertThat(ba.getPaymentPlan()).isEqualTo(PaymentPlan.BASIC));
     }
 
+    @Test
+    public void shouldChargeNewFeeAfterPlanIsChanged() {
+        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
+                .andGiven(new PaymentPlanChanged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.PREMIUM))
+                .when(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
+                .expectEvents(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.PREMIUM.getFee()))
+                .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(-PaymentPlan.PREMIUM.getFee()));
+    }
+
+
+    @Test
+    public void shouldBeAbleToChargeMultipleTimes() {
+        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.BASIC))
+                .andGivenCommands(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
+                .andGivenCommands(new ChangePaymentPlanCommand(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.PREMIUM))
+                .andGiven(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.FREE.getFee()))
+                .when(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
+                .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(-PaymentPlan.BASIC.getFee() - PaymentPlan.PREMIUM.getFee()));
+    }
 
 //    @Test
 //    public void shouldCreateBillingAccountWithInitialBalance() {
