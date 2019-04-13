@@ -8,7 +8,7 @@ import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.springframework.stereotype.Component;
 
 @Component
-class ChargeBillingAccountCommandTargetResolver implements CommandTargetResolver {
+class BillingAccountCommandsTargetResolver implements CommandTargetResolver {
 
     private final AnnotationCommandTargetResolver annotationCommandTargetResolver = AnnotationCommandTargetResolver.builder().build();
 
@@ -16,6 +16,10 @@ class ChargeBillingAccountCommandTargetResolver implements CommandTargetResolver
     public VersionedAggregateIdentifier resolveTarget(CommandMessage<?> command) {
         if (ChargeBillingAccountCommand.class.isAssignableFrom(command.getPayloadType())) {
             final String billingAccountId = ((ChargeBillingAccountCommand) command.getPayload()).getBillingAccountId();
+            return new VersionedAggregateIdentifier(billingAccountId, null);
+        }
+        if (ChangePaymentPlanCommand.class.isAssignableFrom(command.getPayloadType())) {
+            final String billingAccountId = ((ChangePaymentPlanCommand) command.getPayload()).getBillingAccountId();
             return new VersionedAggregateIdentifier(billingAccountId, null);
         }
 

@@ -35,6 +35,11 @@ public class BillingAccount {
         AggregateLifecycle.apply(new BillingAccountCharged(accountId, paymentPlan.getFee()));
     }
 
+    @CommandHandler
+    private void on(ChangePaymentPlanCommand cmd) {
+        AggregateLifecycle.apply(new PaymentPlanChanged(cmd.getBillingAccountId(), cmd.getNewPaymentPlan()));
+    }
+
     @EventHandler
     private void on(BillingAccountCreatedEvent evt) {
         accountId = evt.getAccountId();
@@ -45,5 +50,10 @@ public class BillingAccount {
     @EventHandler
     private void on(BillingAccountCharged evt) {
         balance -= evt.getChargeAmount();
+    }
+
+    @EventHandler
+    private void on(PaymentPlanChanged evt) {
+        paymentPlan = evt.getNewPaymentPlan();
     }
 }

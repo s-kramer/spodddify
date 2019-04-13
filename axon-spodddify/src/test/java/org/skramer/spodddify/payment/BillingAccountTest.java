@@ -25,7 +25,7 @@ public class BillingAccountTest {
     @Before
     public void setUp() {
         fixture = new AggregateTestFixture<>(BillingAccount.class);
-        fixture.registerCommandTargetResolver(new ChargeBillingAccountCommandTargetResolver());
+        fixture.registerCommandTargetResolver(new BillingAccountCommandsTargetResolver());
     }
 
     @Test
@@ -74,6 +74,14 @@ public class BillingAccountTest {
                 .expectEvents(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, paymentPlan.getFee()))
                 .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(endBalance));
     }
+
+    @Test
+    public void shouldBeAbleToChangePaymentPlan() {
+        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
+                .when(new ChangePaymentPlanCommand(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC))
+                .expectState(ba -> assertThat(ba.getPaymentPlan()).isEqualTo(PaymentPlan.BASIC));
+    }
+
 
 //    @Test
 //    public void shouldCreateBillingAccountWithInitialBalance() {
