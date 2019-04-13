@@ -6,6 +6,7 @@ import org.axonframework.eventhandling.EventBus;
 import org.axonframework.eventhandling.GenericEventMessage;
 import org.axonframework.modelling.command.Aggregate;
 import org.axonframework.modelling.command.Repository;
+import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
 import org.skramer.spodddify.payment.event.BillingAccountNotFoundEvent;
 import org.springframework.stereotype.Service;
