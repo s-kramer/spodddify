@@ -63,9 +63,16 @@ public class BillingAccountTest {
 
     @Test
     public void shouldNotChargeBillingAccountOnFreePaymentPlan() {
-        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
+        assertFeeIsDeductedAccordingToPaymentPlan(PaymentPlan.FREE, -PaymentPlan.FREE.getFee());
+        assertFeeIsDeductedAccordingToPaymentPlan(PaymentPlan.BASIC, -PaymentPlan.BASIC.getFee());
+        assertFeeIsDeductedAccordingToPaymentPlan(PaymentPlan.PREMIUM, -PaymentPlan.PREMIUM.getFee());
+    }
+
+    private void assertFeeIsDeductedAccordingToPaymentPlan(PaymentPlan paymentPlan, long endBalance) {
+        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, paymentPlan))
                 .when(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
-                .expectEvents(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.FREE.getFee()));
+                .expectEvents(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, paymentPlan.getFee()))
+                .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(endBalance));
     }
 
 //    @Test
