@@ -109,6 +109,5 @@ public class BillingAccountTest {
                 .when(new SettleAccountBalanceCommand(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC.getFee()))
                 .expectEvents(new FoundsTransferredEvent(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC.getFee()))
                 .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(0L));
-
     }
 }
