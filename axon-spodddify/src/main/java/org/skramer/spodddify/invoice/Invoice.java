@@ -20,8 +20,8 @@ import lombok.ToString;
 @ToString
 @Getter(AccessLevel.PACKAGE)
 class Invoice {
-
     private static final long INITIAL_BALANCE = 0L;
+
     @AggregateIdentifier
     private String invoiceId;
     private Instant creationTime;

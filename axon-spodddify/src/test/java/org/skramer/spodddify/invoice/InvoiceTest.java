@@ -5,6 +5,8 @@ import static org.axonframework.test.matchers.Matchers.andNoMore;
 import static org.axonframework.test.matchers.Matchers.exactSequenceOf;
 import static org.axonframework.test.matchers.Matchers.matches;
 
+import org.axonframework.commandhandling.CommandBus;
+import org.axonframework.commandhandling.gateway.DefaultCommandGateway;
 import org.axonframework.eventhandling.EventMessage;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
@@ -21,6 +23,10 @@ public class InvoiceTest {
     public void setUp() {
         fixture = new AggregateTestFixture<>(Invoice.class);
         fixture.registerCommandTargetResolver(new InvoiceCommandsTargetResolver());
+
+        final CommandBus commandBus = fixture.getCommandBus();
+        DefaultCommandGateway commandGateway = DefaultCommandGateway.builder().commandBus(commandBus).build();
+        fixture.registerInjectableResource(new InvoiceEventHandler(commandGateway));
     }
 
     @Test
@@ -47,6 +53,5 @@ public class InvoiceTest {
             return true;
         });
     }
-
 
 }
