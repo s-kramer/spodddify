@@ -14,10 +14,15 @@ repositories {
     mavenCentral()
 }
 
+configurations.all {
+  exclude group: "org.axonframework", module: "axon-server-connector"
+}
+
 dependencies {
     // Spring
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     compileOnly group: 'org.projectlombok', name: 'lombok'
@@ -25,8 +30,9 @@ dependencies {
 
     // Axon
     compile group: 'org.axonframework', name: 'axon-spring', version: '4.1.1'
-    testCompile group: 'org.axonframework', name: 'axon-test', version: '4.1.1'
     compile group: 'org.axonframework', name: 'axon-eventsourcing', version: '4.1.1'
+    compile group: 'org.axonframework', name: 'axon-spring-boot-autoconfigure', version: '4.1.1'
+    testCompile group: 'org.axonframework', name: 'axon-test', version: '4.1.1'
 
     // self
     compile project(':spodddify-api')
