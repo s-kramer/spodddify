@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 @AggregateRoot
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @ToString
 @Getter(AccessLevel.PACKAGE)

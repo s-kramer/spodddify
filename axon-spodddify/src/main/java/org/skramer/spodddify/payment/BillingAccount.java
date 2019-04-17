@@ -19,7 +19,7 @@ import org.skramer.spodddify.payment.event.BillingAccountCreatedEvent;
 
 @Aggregate
 @Getter(AccessLevel.PACKAGE)
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @ToString
 class BillingAccount {
