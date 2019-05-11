@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 import org.axonframework.modelling.command.Aggregate;
 import org.axonframework.modelling.command.Repository;
 import org.axonframework.queryhandling.QueryHandler;
+import org.skramer.spodddify.payment.query.BillingAccountBalanceQuery;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 

@@ -1,11 +1,11 @@
-package org.skramer.spodddify.payment;
+package org.skramer.spodddify.payment.query;
 
 import javax.persistence.Id;
 
 import lombok.Value;
 
 @Value
-class BillingAccountBalanceQuery {
+public class BillingAccountBalanceQuery {
     @Id
     private String billingAccountId;
 }

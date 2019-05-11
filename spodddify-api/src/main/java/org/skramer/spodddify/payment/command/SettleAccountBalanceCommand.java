@@ -1,4 +1,4 @@
-package org.skramer.spodddify.payment;
+package org.skramer.spodddify.payment.command;
 
 import lombok.Value;
 

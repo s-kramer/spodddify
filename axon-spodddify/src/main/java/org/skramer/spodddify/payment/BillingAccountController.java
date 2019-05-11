@@ -7,6 +7,7 @@ import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.skramer.spodddify.payment.command.CreateBillingAccountCommand;
+import org.skramer.spodddify.payment.query.BillingAccountBalanceQuery;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;

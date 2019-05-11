@@ -13,6 +13,7 @@ import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
+import org.skramer.spodddify.BillingAccountCommandsTargetResolver;
 
 public class InvoiceTest {
     private static final String ACCOUNT_ID = "dummyBillingAccountId";
@@ -22,7 +23,7 @@ public class InvoiceTest {
     @Before
     public void setUp() {
         fixture = new AggregateTestFixture<>(Invoice.class);
-        fixture.registerCommandTargetResolver(new InvoiceCommandsTargetResolver());
+        fixture.registerCommandTargetResolver(new BillingAccountCommandsTargetResolver());
 
         final CommandBus commandBus = fixture.getCommandBus();
         DefaultCommandGateway commandGateway = DefaultCommandGateway.builder().commandBus(commandBus).build();

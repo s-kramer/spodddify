@@ -5,11 +5,13 @@ import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.skramer.spodddify.payment.command.ChangePaymentPlanCommand;
 import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.skramer.spodddify.payment.command.CreateBillingAccountCommand;
 import org.skramer.spodddify.payment.domain.PaymentPlan;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
 import org.skramer.spodddify.payment.event.BillingAccountCreatedEvent;
+import org.skramer.spodddify.payment.event.PaymentPlanChanged;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
