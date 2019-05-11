@@ -24,15 +24,20 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
-    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     compileOnly group: 'org.projectlombok', name: 'lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    // External
+    compile group: 'io.vavr', name: 'vavr', version: '0.10.0'
 
     // Axon
     compile group: 'org.axonframework', name: 'axon-spring', version: '4.1.1'
     compile group: 'org.axonframework', name: 'axon-eventsourcing', version: '4.1.1'
     compile group: 'org.axonframework', name: 'axon-spring-boot-autoconfigure', version: '4.1.1'
+
+    // Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.axonframework', name: 'axon-test', version: '4.1.1'
+    testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 
     // self
     compile project(':spodddify-api')
