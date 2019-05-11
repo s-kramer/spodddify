@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-class InvoiceEventHandler {
+class ExternalEventsHandler {
 
     private CommandGateway commandGateway;
 

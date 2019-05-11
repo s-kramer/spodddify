@@ -26,7 +26,7 @@ public class InvoiceTest {
 
         final CommandBus commandBus = fixture.getCommandBus();
         DefaultCommandGateway commandGateway = DefaultCommandGateway.builder().commandBus(commandBus).build();
-        fixture.registerInjectableResource(new InvoiceEventHandler(commandGateway));
+        fixture.registerInjectableResource(new ExternalEventsHandler(commandGateway));
     }
 
     @Test
