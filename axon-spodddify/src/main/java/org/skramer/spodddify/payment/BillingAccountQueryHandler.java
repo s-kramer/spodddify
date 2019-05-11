@@ -5,14 +5,16 @@ import java.util.concurrent.CompletableFuture;
 import org.axonframework.modelling.command.Aggregate;
 import org.axonframework.modelling.command.Repository;
 import org.axonframework.queryhandling.QueryHandler;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import lombok.AllArgsConstructor;
-
 @Component
-@AllArgsConstructor
 class BillingAccountQueryHandler {
-    Repository<BillingAccount> repository;
+    private Repository<BillingAccount> repository;
+
+    public BillingAccountQueryHandler(@Qualifier("billingAccountRepository") Repository<BillingAccount> repository) {
+        this.repository = repository;
+    }
 
     @QueryHandler
     private CompletableFuture<BillingAccountBalance> getBalance(BillingAccountBalanceQuery query) {

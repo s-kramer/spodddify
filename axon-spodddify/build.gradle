@@ -24,7 +24,10 @@ dependencies {
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa'
     compileOnly group: 'org.projectlombok', name: 'lombok'
+    compile group: 'com.h2database', name: 'h2'
+
 
     // External
     compile group: 'io.vavr', name: 'vavr', version: '0.10.0'

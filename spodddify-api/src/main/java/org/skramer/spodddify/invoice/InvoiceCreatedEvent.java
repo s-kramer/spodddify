@@ -13,6 +13,6 @@ public class InvoiceCreatedEvent {
     private final String billingAccountId;
     @NonNull
     private final Instant creationTime;
-    @NonNull
+
     private final long invoiceAmount;
 }

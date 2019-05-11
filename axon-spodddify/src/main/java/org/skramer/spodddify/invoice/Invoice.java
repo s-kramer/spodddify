@@ -6,7 +6,7 @@ import org.axonframework.commandhandling.CommandHandler;
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
-import org.axonframework.modelling.command.AggregateRoot;
+import org.axonframework.spring.stereotype.Aggregate;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
-@AggregateRoot
+@Aggregate
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @ToString
