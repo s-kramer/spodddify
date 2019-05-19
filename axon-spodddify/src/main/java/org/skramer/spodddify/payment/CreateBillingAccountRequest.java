@@ -19,6 +19,7 @@ class CreateBillingAccountRequest {
     private PaymentPlan paymentPlan;
 }
 
+// TODO: 18.05.19 skramer: remove the explicit serializer?
 @Component
 class CreateBillingAccountRequestDeserializer extends JsonDeserializer<CreateBillingAccountRequest> {
 
