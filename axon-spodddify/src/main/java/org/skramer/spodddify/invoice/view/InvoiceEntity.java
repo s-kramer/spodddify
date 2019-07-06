@@ -1,4 +1,4 @@
-package org.skramer.spodddify.invoice;
+package org.skramer.spodddify.invoice.view;
 
 import java.time.Instant;
 
@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-class InvoiceEntity {
+public class InvoiceEntity {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")

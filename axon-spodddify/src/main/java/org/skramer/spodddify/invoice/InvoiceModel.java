@@ -2,6 +2,8 @@ package org.skramer.spodddify.invoice;
 
 import java.time.Instant;
 
+import org.skramer.spodddify.invoice.view.InvoiceEntity;
+
 import lombok.Value;
 
 @Value
