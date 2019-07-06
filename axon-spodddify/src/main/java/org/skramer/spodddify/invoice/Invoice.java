@@ -7,7 +7,7 @@ import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
-import org.skramer.spodddify.invoice.command.CreateInvoiceCommand;
+import org.skramer.spodddify.invoice.command.CreateInvoice;
 import org.skramer.spodddify.invoice.event.InvoiceCreated;
 
 import lombok.AccessLevel;
@@ -22,17 +22,21 @@ import lombok.ToString;
 @ToString
 @Getter(AccessLevel.PACKAGE)
 class Invoice {
-    private static final long INITIAL_BALANCE = 0L;
-
     @AggregateIdentifier
     private String invoiceId;
     private Instant creationTime;
     private long amount;
     private String billingAccountId;
+    private long payoffAmount;
 
     @CommandHandler
-    public Invoice(CreateInvoiceCommand cmd) {
+    public Invoice(CreateInvoice cmd) {
         AggregateLifecycle.apply(new InvoiceCreated(cmd.getInvoiceId(), cmd.getBillingAccountId(), Instant.now(), cmd.getInvoiceAmount()));
+    }
+
+    @CommandHandler
+    public void on(PayOffInvoice cmd) {
+        AggregateLifecycle.apply(new InvoicePaid(cmd.getInvoiceId(), cmd.getPayOffAmount()));
     }
 
     @EventHandler
@@ -41,5 +45,13 @@ class Invoice {
         this.creationTime = evt.getCreationTime();
         this.amount = evt.getInvoiceAmount();
         this.billingAccountId = evt.getBillingAccountId();
+    }
+
+    @EventHandler
+    public void on(InvoicePaid evt) {
+        this.payoffAmount += evt.getPayoffAmount();
+        if (amount == payoffAmount) {
+            AggregateLifecycle.apply(new InvoicePaidCompletely(invoiceId));
+        }
     }
 }

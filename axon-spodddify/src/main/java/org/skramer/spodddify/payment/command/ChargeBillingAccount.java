@@ -5,9 +5,7 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import lombok.Value;
 
 @Value
-public class SettleAccountBalanceCommand {
+public class ChargeBillingAccount {
     @TargetAggregateIdentifier
     private final String billingAccountId;
-    private final long incomingAmount;
-
 }

@@ -1,13 +1,13 @@
 package org.skramer.spodddify.payment.command;
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
-import org.skramer.spodddify.payment.domain.PaymentPlan;
 
 import lombok.Value;
 
 @Value
-public class ChangePaymentPlanCommand {
+public class SettleAccountBalance {
     @TargetAggregateIdentifier
     private final String billingAccountId;
-    private final PaymentPlan newPaymentPlan;
+    private final long incomingAmount;
+
 }

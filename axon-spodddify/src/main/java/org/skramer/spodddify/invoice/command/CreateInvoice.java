@@ -7,14 +7,14 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import lombok.Value;
 
 @Value
-public class CreateInvoiceCommand {
+public class CreateInvoice {
 
     @TargetAggregateIdentifier
     String invoiceId;
     String billingAccountId;
     long invoiceAmount;
 
-    public CreateInvoiceCommand(String billingAccountId, long invoiceAmount) {
+    public CreateInvoice(String billingAccountId, long invoiceAmount) {
         invoiceId = UUID.randomUUID().toString();
         this.billingAccountId = billingAccountId;
         this.invoiceAmount = invoiceAmount;

@@ -18,10 +18,11 @@ import lombok.AllArgsConstructor;
 @Service
 class InvoiceProjection {
     private InvoiceRepository invoiceRepository;
+    private static final long INITIAL_PAY_OFF_BALANCE = 0L;
 
     @EventHandler
     void on(InvoiceCreated event) {
-        invoiceRepository.save(new InvoiceEntity(event.getInvoiceId(), event.getCreationTime(), event.getInvoiceAmount(), event.getBillingAccountId()));
+        invoiceRepository.save(new InvoiceEntity(event.getInvoiceId(), event.getCreationTime(), event.getInvoiceAmount(), event.getBillingAccountId(), INITIAL_PAY_OFF_BALANCE));
     }
 
     @QueryHandler

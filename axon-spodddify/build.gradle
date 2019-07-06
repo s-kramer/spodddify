@@ -1,4 +1,5 @@
 plugins {
+    id "groovy"
     id "org.springframework.boot" version "2.1.4.RELEASE" 
 }
 
@@ -21,6 +22,7 @@ configurations.all {
 dependencies {
     // Spring
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator'
+    compile group: 'org.springframework.boot', name: 'spring-boot-devtools'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-aop'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-web'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-validation'
@@ -41,6 +43,7 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testCompile group: 'org.axonframework', name: 'axon-test', version: '4.1.1'
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile group: 'org.spockframework', name: 'spock-spring', version: '1.3-groovy-2.5'
 
     // self
 }

@@ -24,4 +24,5 @@ public class InvoiceEntity {
     private Instant creationTime;
     private long amount;
     private String billingAccountId;
+    private long paidOffAmount;
 }

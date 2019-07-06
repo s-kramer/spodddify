@@ -5,7 +5,8 @@ import org.axonframework.modelling.command.TargetAggregateIdentifier;
 import lombok.Value;
 
 @Value
-public class ChargeBillingAccountCommand {
+public class PayoffBillingAccount {
     @TargetAggregateIdentifier
-    private final String billingAccountId;
+    String billingAccountId;
+    long payoffAmount;
 }
