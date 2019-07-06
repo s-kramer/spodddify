@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.skramer.spodddify.invoice.event.GetAllInvoicesForAccountQuery;
-import org.skramer.spodddify.invoice.event.InvoiceCreatedEvent;
+import org.skramer.spodddify.invoice.event.GetAllInvoicesForAccount;
+import org.skramer.spodddify.invoice.event.InvoiceCreated;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
@@ -29,8 +29,8 @@ public class InvoiceProjectionTest {
 
     @Test
     public void shouldBeAbleToFetchCreatedInvoices() {
-        invoiceProjection.on(new InvoiceCreatedEvent(INVOICE_ID, BILLING_ACCOUNT_ID, CREATION_TIME, INVOICE_AMOUNT));
-        final List<InvoiceModel> invoices = invoiceProjection.getAllInvoicesForAccount(new GetAllInvoicesForAccountQuery(BILLING_ACCOUNT_ID));
+        invoiceProjection.on(new InvoiceCreated(INVOICE_ID, BILLING_ACCOUNT_ID, CREATION_TIME, INVOICE_AMOUNT));
+        final List<InvoiceModel> invoices = invoiceProjection.getAllInvoicesForAccount(new GetAllInvoicesForAccount(BILLING_ACCOUNT_ID));
 
         assertThat(invoices).hasSize(1);
         assertThat(invoices.get(0)).isEqualToIgnoringGivenFields(new InvoiceModel(INVOICE_ID, BILLING_ACCOUNT_ID, CREATION_TIME, INVOICE_AMOUNT), "invoiceId");

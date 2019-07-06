@@ -12,7 +12,6 @@ import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
-import org.skramer.spodddify.BillingAccountCommandsTargetResolver;
 import org.skramer.spodddify.payment.command.ChangePaymentPlanCommand;
 import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.skramer.spodddify.payment.command.CreateBillingAccountCommand;
@@ -31,7 +30,6 @@ public class BillingAccountTest {
     @Before
     public void setUp() {
         fixture = new AggregateTestFixture<>(BillingAccount.class);
-        fixture.registerCommandTargetResolver(new BillingAccountCommandsTargetResolver());
     }
 
     @Test

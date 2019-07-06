@@ -6,7 +6,7 @@ import lombok.NonNull;
 import lombok.Value;
 
 @Value
-public class InvoiceCreatedEvent {
+public class InvoiceCreated {
     @NonNull
     private final String invoiceId;
     @NonNull
