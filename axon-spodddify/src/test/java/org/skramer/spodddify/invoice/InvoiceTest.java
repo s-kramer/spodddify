@@ -14,6 +14,8 @@ import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
 import org.skramer.spodddify.BillingAccountCommandsTargetResolver;
+import org.skramer.spodddify.invoice.event.CreateInvoiceCommand;
+import org.skramer.spodddify.invoice.event.InvoiceCreatedEvent;
 
 public class InvoiceTest {
     private static final String ACCOUNT_ID = "dummyBillingAccountId";

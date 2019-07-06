@@ -2,6 +2,7 @@ package org.skramer.spodddify.invoice;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.eventhandling.EventHandler;
+import org.skramer.spodddify.invoice.event.CreateInvoiceCommand;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
 import org.springframework.stereotype.Component;
 

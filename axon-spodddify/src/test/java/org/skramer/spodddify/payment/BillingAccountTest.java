@@ -19,8 +19,8 @@ import org.skramer.spodddify.payment.command.CreateBillingAccountCommand;
 import org.skramer.spodddify.payment.command.SettleAccountBalanceCommand;
 import org.skramer.spodddify.payment.domain.PaymentPlan;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
-import org.skramer.spodddify.payment.event.BillingAccountCreatedEvent;
-import org.skramer.spodddify.payment.event.FoundsTransferredEvent;
+import org.skramer.spodddify.payment.event.BillingAccountCreated;
+import org.skramer.spodddify.payment.event.FoundsTransferred;
 import org.skramer.spodddify.payment.event.PaymentPlanChanged;
 
 public class BillingAccountTest {
@@ -49,8 +49,8 @@ public class BillingAccountTest {
     private static Matcher<EventMessage<?>> accountWithInitialBalanceAndPlan(PaymentPlan paymentPlan) {
         return matches(em -> {
             assertThat(em.getIdentifier()).isNotNull();
-            assertThat(em.getPayloadType()).isEqualTo(BillingAccountCreatedEvent.class);
-            assertThat(em.getPayload()).isEqualToIgnoringGivenFields(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, paymentPlan), "accountId");
+            assertThat(em.getPayloadType()).isEqualTo(BillingAccountCreated.class);
+            assertThat(em.getPayload()).isEqualToIgnoringGivenFields(new BillingAccountCreated(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, paymentPlan), "accountId");
             return true;
         });
     }
@@ -75,7 +75,7 @@ public class BillingAccountTest {
     }
 
     private void assertFeeIsDeductedAccordingToPaymentPlan(PaymentPlan paymentPlan, long endBalance) {
-        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, paymentPlan))
+        fixture.given(new BillingAccountCreated(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, paymentPlan))
                 .when(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
                 .expectEvents(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, paymentPlan.getFee()))
                 .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(endBalance));
@@ -83,14 +83,14 @@ public class BillingAccountTest {
 
     @Test
     public void shouldBeAbleToChangePaymentPlan() {
-        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
+        fixture.given(new BillingAccountCreated(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
                 .when(new ChangePaymentPlanCommand(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC))
                 .expectState(ba -> assertThat(ba.getPaymentPlan()).isEqualTo(PaymentPlan.BASIC));
     }
 
     @Test
     public void shouldChargeNewFeeAfterPlanIsChanged() {
-        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
+        fixture.given(new BillingAccountCreated(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.FREE))
                 .andGiven(new PaymentPlanChanged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.PREMIUM))
                 .when(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
                 .expectEvents(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.PREMIUM.getFee()))
@@ -100,7 +100,7 @@ public class BillingAccountTest {
 
     @Test
     public void shouldBeAbleToChargeMultipleTimes() {
-        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.BASIC))
+        fixture.given(new BillingAccountCreated(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.BASIC))
                 .andGivenCommands(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
                 .andGivenCommands(new ChangePaymentPlanCommand(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.PREMIUM))
                 .andGiven(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.FREE.getFee()))
@@ -111,10 +111,10 @@ public class BillingAccountTest {
     @Test
     @Ignore("not yet implemented")
     public void shouldBeAbleToSettleAccountBalance() {
-        fixture.given(new BillingAccountCreatedEvent(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.BASIC))
+        fixture.given(new BillingAccountCreated(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.BASIC))
                 .andGivenCommands(new ChargeBillingAccountCommand(DUMMY_BILLING_ACCOUNT_ID))
                 .when(new SettleAccountBalanceCommand(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC.getFee()))
-                .expectEvents(new FoundsTransferredEvent(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC.getFee()))
+                .expectEvents(new FoundsTransferred(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC.getFee()))
                 .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(0L));
     }
 }

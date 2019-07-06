@@ -43,5 +43,4 @@ dependencies {
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
 
     // self
-    compile project(':spodddify-api')
 }

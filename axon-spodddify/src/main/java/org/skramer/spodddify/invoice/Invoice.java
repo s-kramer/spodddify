@@ -7,6 +7,8 @@ import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
+import org.skramer.spodddify.invoice.event.CreateInvoiceCommand;
+import org.skramer.spodddify.invoice.event.InvoiceCreatedEvent;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

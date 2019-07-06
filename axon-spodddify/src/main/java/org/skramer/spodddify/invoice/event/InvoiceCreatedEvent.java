@@ -1,4 +1,4 @@
-package org.skramer.spodddify.invoice;
+package org.skramer.spodddify.invoice.event;
 
 import java.time.Instant;
 

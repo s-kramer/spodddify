@@ -25,7 +25,7 @@ class BillingAccountController {
     private final CommandGateway commandGateway;
 
     @PostMapping("/billing-account")
-    CompletableFuture<Object> createBillingAccount(@RequestBody CreateBillingAccountRequest createBillingAccountRequest) {
+    CompletableFuture<?> createBillingAccount(@RequestBody CreateBillingAccountRequest createBillingAccountRequest) {
         return commandGateway.send(new CreateBillingAccountCommand(createBillingAccountRequest.getPaymentPlan()));
     }
 

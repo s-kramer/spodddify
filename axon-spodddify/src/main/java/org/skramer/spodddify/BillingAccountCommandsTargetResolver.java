@@ -4,7 +4,7 @@ import org.axonframework.commandhandling.CommandMessage;
 import org.axonframework.modelling.command.AnnotationCommandTargetResolver;
 import org.axonframework.modelling.command.CommandTargetResolver;
 import org.axonframework.modelling.command.VersionedAggregateIdentifier;
-import org.skramer.spodddify.invoice.CreateInvoiceCommand;
+import org.skramer.spodddify.invoice.event.CreateInvoiceCommand;
 import org.skramer.spodddify.payment.command.ChangePaymentPlanCommand;
 import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.springframework.stereotype.Component;

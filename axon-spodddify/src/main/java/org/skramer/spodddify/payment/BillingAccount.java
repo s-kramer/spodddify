@@ -10,7 +10,7 @@ import org.skramer.spodddify.payment.command.ChargeBillingAccountCommand;
 import org.skramer.spodddify.payment.command.CreateBillingAccountCommand;
 import org.skramer.spodddify.payment.domain.PaymentPlan;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
-import org.skramer.spodddify.payment.event.BillingAccountCreatedEvent;
+import org.skramer.spodddify.payment.event.BillingAccountCreated;
 import org.skramer.spodddify.payment.event.PaymentPlanChanged;
 
 import lombok.AccessLevel;
@@ -34,7 +34,7 @@ class BillingAccount {
 
     @CommandHandler
     public BillingAccount(CreateBillingAccountCommand cmd) {
-        AggregateLifecycle.apply(new BillingAccountCreatedEvent(cmd.getBillingAccountId(), INITIAL_ACCOUNT_BALANCE, cmd.getPaymentPlan()));
+        AggregateLifecycle.apply(new BillingAccountCreated(cmd.getBillingAccountId(), INITIAL_ACCOUNT_BALANCE, cmd.getPaymentPlan()));
     }
 
     @CommandHandler
@@ -48,7 +48,7 @@ class BillingAccount {
     }
 
     @EventHandler
-    private void on(BillingAccountCreatedEvent evt) {
+    private void on(BillingAccountCreated evt) {
         accountId = evt.getAccountId();
         balance = evt.getBalance();
         paymentPlan = evt.getPaymentPlan();
