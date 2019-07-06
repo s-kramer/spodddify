@@ -9,16 +9,13 @@ import org.axonframework.eventhandling.EventMessage;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.hamcrest.Matcher;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.skramer.spodddify.payment.command.ChangePaymentPlan;
 import org.skramer.spodddify.payment.command.ChargeBillingAccount;
 import org.skramer.spodddify.payment.command.CreateBillingAccount;
-import org.skramer.spodddify.payment.command.SettleAccountBalance;
 import org.skramer.spodddify.payment.domain.PaymentPlan;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
 import org.skramer.spodddify.payment.event.BillingAccountCreated;
-import org.skramer.spodddify.payment.event.FoundsTransferred;
 import org.skramer.spodddify.payment.event.PaymentPlanChanged;
 
 public class BillingAccountTest {
@@ -86,15 +83,5 @@ public class BillingAccountTest {
                 .andGiven(new BillingAccountCharged(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.FREE.getFee()))
                 .when(new ChargeBillingAccount(DUMMY_BILLING_ACCOUNT_ID))
                 .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(-PaymentPlan.BASIC.getFee() - PaymentPlan.PREMIUM.getFee()));
-    }
-
-    @Test
-    @Ignore("not yet implemented")
-    public void shouldBeAbleToSettleAccountBalance() {
-        fixture.given(new BillingAccountCreated(DUMMY_BILLING_ACCOUNT_ID, INITIAL_BALANCE, PaymentPlan.BASIC))
-                .andGivenCommands(new ChargeBillingAccount(DUMMY_BILLING_ACCOUNT_ID))
-                .when(new SettleAccountBalance(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC.getFee()))
-                .expectEvents(new FoundsTransferred(DUMMY_BILLING_ACCOUNT_ID, PaymentPlan.BASIC.getFee()))
-                .expectState(ba -> assertThat(ba.getBalance()).isEqualTo(0L));
     }
 }

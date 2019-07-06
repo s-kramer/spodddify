@@ -22,6 +22,7 @@ public class InvoiceProjectionTest {
     private static final int INVOICE_AMOUNT = 1000;
     private static final String BILLING_ACCOUNT_ID = "billingAccountId";
     private static final String INVOICE_ID = "invoiceId";
+    private static final long INITIAL_PAYOFF_AMOUNT = 0L;
 
     @Autowired
     InvoiceProjection invoiceProjection;
@@ -33,6 +34,6 @@ public class InvoiceProjectionTest {
         final List<InvoiceModel> invoices = invoiceProjection.getAllInvoicesForAccount(new GetAllInvoicesForAccount(BILLING_ACCOUNT_ID));
 
         assertThat(invoices).hasSize(1);
-        assertThat(invoices.get(0)).isEqualToIgnoringGivenFields(new InvoiceModel(INVOICE_ID, BILLING_ACCOUNT_ID, CREATION_TIME, INVOICE_AMOUNT), "invoiceId");
+        assertThat(invoices.get(0)).isEqualToIgnoringGivenFields(new InvoiceModel(INVOICE_ID, BILLING_ACCOUNT_ID, CREATION_TIME, INVOICE_AMOUNT, INITIAL_PAYOFF_AMOUNT), "invoiceId");
     }
 }

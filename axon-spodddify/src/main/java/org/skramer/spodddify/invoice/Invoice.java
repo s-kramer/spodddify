@@ -15,12 +15,14 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.extern.slf4j.Slf4j;
 
 @Aggregate
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @EqualsAndHashCode
 @ToString
 @Getter(AccessLevel.PACKAGE)
+@Slf4j
 class Invoice {
     @AggregateIdentifier
     private String invoiceId;
@@ -36,11 +38,13 @@ class Invoice {
 
     @CommandHandler
     public void on(PayOffInvoice cmd) {
+        log.info("Invoice pay off requested: {}", cmd);
         AggregateLifecycle.apply(new InvoicePaid(cmd.getInvoiceId(), cmd.getPayOffAmount()));
     }
 
     @EventHandler
     public void on(InvoiceCreated evt) {
+        log.info("Creating invoice: {}", evt);
         this.invoiceId = evt.getInvoiceId();
         this.creationTime = evt.getCreationTime();
         this.amount = evt.getInvoiceAmount();
@@ -49,6 +53,7 @@ class Invoice {
 
     @EventHandler
     public void on(InvoicePaid evt) {
+        log.info("Paying invoice: {}", evt);
         this.payoffAmount += evt.getPayoffAmount();
         if (amount == payoffAmount) {
             AggregateLifecycle.apply(new InvoicePaidCompletely(invoiceId));

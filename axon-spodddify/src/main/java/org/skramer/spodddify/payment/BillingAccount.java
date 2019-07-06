@@ -12,6 +12,7 @@ import org.skramer.spodddify.payment.command.PayoffBillingAccount;
 import org.skramer.spodddify.payment.domain.PaymentPlan;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
 import org.skramer.spodddify.payment.event.BillingAccountCreated;
+import org.skramer.spodddify.payment.event.BillingAccountDonated;
 import org.skramer.spodddify.payment.event.PaymentPlanChanged;
 
 import lombok.AccessLevel;
@@ -58,6 +59,7 @@ class BillingAccount {
         if (isPayoffExceedingBalance(cmd)) {
             throw new IllegalArgumentException("Payoff amount " + cmd.getPayoffAmount() + " cannot exceed current balance: " + cmd.getPayoffAmount());
         }
+
         AggregateLifecycle.apply(new BillingAccountDonated(cmd.getBillingAccountId(), cmd.getPayoffAmount()));
     }
 

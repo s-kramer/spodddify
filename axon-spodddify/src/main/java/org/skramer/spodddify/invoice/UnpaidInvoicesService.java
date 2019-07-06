@@ -6,7 +6,7 @@ import java.util.Map;
 import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.skramer.spodddify.invoice.view.InvoiceEntity;
 import org.skramer.spodddify.invoice.view.InvoiceRepository;
-import org.skramer.spodddify.payment.BillingAccountDonated;
+import org.skramer.spodddify.payment.event.BillingAccountDonated;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
