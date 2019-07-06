@@ -1,4 +1,4 @@
-package org.skramer.spodddify.invoice.event;
+package org.skramer.spodddify.invoice.command;
 
 import java.util.UUID;
 

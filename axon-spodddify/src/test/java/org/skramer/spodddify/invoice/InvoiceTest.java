@@ -13,7 +13,7 @@ import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
-import org.skramer.spodddify.invoice.event.CreateInvoiceCommand;
+import org.skramer.spodddify.invoice.command.CreateInvoiceCommand;
 import org.skramer.spodddify.invoice.event.InvoiceCreated;
 
 public class InvoiceTest {

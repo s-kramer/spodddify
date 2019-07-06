@@ -8,8 +8,8 @@ import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.skramer.spodddify.invoice.event.GetAllInvoicesForAccount;
 import org.skramer.spodddify.invoice.event.InvoiceCreated;
+import org.skramer.spodddify.invoice.query.GetAllInvoicesForAccount;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;

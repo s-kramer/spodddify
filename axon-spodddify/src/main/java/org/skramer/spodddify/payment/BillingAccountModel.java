@@ -5,6 +5,7 @@ import org.skramer.spodddify.payment.domain.PaymentPlan;
 import lombok.Value;
 
 @Value
+// TODO: is this class still required?
 class BillingAccountModel {
     private String accountId;
     private long balance;

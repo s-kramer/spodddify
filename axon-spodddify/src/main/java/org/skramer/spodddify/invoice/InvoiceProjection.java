@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.queryhandling.QueryHandler;
-import org.skramer.spodddify.invoice.event.GetAllInvoicesForAccount;
 import org.skramer.spodddify.invoice.event.InvoiceCreated;
+import org.skramer.spodddify.invoice.query.GetAllInvoicesForAccount;
 import org.springframework.stereotype.Service;
 
 import lombok.AllArgsConstructor;
