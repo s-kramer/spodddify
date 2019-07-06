@@ -9,7 +9,6 @@ import org.axonframework.eventhandling.EventMessage;
 import org.axonframework.test.aggregate.AggregateTestFixture;
 import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.hamcrest.Matcher;
-import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.skramer.spodddify.payment.command.ChangePaymentPlanCommand;
@@ -25,24 +24,7 @@ import org.skramer.spodddify.payment.event.PaymentPlanChanged;
 public class BillingAccountTest {
     private static final String DUMMY_BILLING_ACCOUNT_ID = "dummyAccountId";
     private static final long INITIAL_BALANCE = 0L;
-    private FixtureConfiguration<BillingAccount> fixture;
-
-    @Before
-    public void setUp() {
-        fixture = new AggregateTestFixture<>(BillingAccount.class);
-    }
-
-    @Test
-    public void shouldCreateBillingAccountWithDefaultPlan() {
-        fixture.givenNoPriorActivity()
-                .when(new CreateBillingAccountCommand())
-                .expectEventsMatching(
-                        exactSequenceOf(
-                                accountWithInitialBalanceAndPlan(PaymentPlan.FREE),
-                                andNoMore()
-                        )
-                );
-    }
+    private FixtureConfiguration<BillingAccount> fixture = new AggregateTestFixture<>(BillingAccount.class);
 
     private static Matcher<EventMessage<?>> accountWithInitialBalanceAndPlan(PaymentPlan paymentPlan) {
         return matches(em -> {
