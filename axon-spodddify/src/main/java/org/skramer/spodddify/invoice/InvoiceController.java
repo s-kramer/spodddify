@@ -5,6 +5,7 @@ import java.util.concurrent.CompletableFuture;
 
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
+import org.skramer.spodddify.invoice.query.GetAllInvoicesForAccount;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ class InvoiceController {
 
     @GetMapping("/invoice/billingAccount/{billingAccountId}")
     CompletableFuture<List<InvoiceModel>> getInvoicesForBillingAccount(@PathVariable("billingAccountId") String billingAccountId) {
-        return queryGateway.query(new GetAllInvoicesForAccountQuery(billingAccountId), ResponseTypes.multipleInstancesOf(InvoiceModel.class));
+        return queryGateway.query(new GetAllInvoicesForAccount(billingAccountId), ResponseTypes.multipleInstancesOf(InvoiceModel.class));
     }
 
 }

@@ -13,27 +13,32 @@ import org.axonframework.test.aggregate.FixtureConfiguration;
 import org.hamcrest.Matcher;
 import org.junit.Before;
 import org.junit.Test;
-import org.skramer.spodddify.BillingAccountCommandsTargetResolver;
+import org.skramer.spodddify.invoice.command.CreateInvoice;
+import org.skramer.spodddify.invoice.event.InvoiceCreated;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class InvoiceTest {
     private static final String ACCOUNT_ID = "dummyBillingAccountId";
     private static final long INVOICE_AMOUNT = 100;
     private FixtureConfiguration<Invoice> fixture;
 
+    @Autowired
+    UnpaidInvoicesService unpaidInvoicesService;
+
+
     @Before
     public void setUp() {
         fixture = new AggregateTestFixture<>(Invoice.class);
-        fixture.registerCommandTargetResolver(new BillingAccountCommandsTargetResolver());
 
         final CommandBus commandBus = fixture.getCommandBus();
         DefaultCommandGateway commandGateway = DefaultCommandGateway.builder().commandBus(commandBus).build();
-        fixture.registerInjectableResource(new ExternalEventsHandler(commandGateway));
+        fixture.registerInjectableResource(new ExternalEventsHandler(commandGateway, unpaidInvoicesService));
     }
 
     @Test
     public void shouldBeAbleToCreateInvoice() {
         fixture.givenNoPriorActivity()
-                .when(new CreateInvoiceCommand(ACCOUNT_ID, INVOICE_AMOUNT))
+                .when(new CreateInvoice(ACCOUNT_ID, INVOICE_AMOUNT))
                 .expectEventsMatching(exactSequenceOf(invoiceWithId(), andNoMore()))
                 .expectState(invoice -> {
                     assertThat(invoice.getInvoiceId()).isNotNull();
@@ -46,11 +51,11 @@ public class InvoiceTest {
     private static Matcher<EventMessage<?>> invoiceWithId() {
         return matches(em -> {
             assertThat(em.getIdentifier()).isNotNull();
-            assertThat(em.getPayloadType()).isEqualTo(InvoiceCreatedEvent.class);
-            assertThat(((InvoiceCreatedEvent) em.getPayload()).getInvoiceId()).isNotNull();
-            assertThat(((InvoiceCreatedEvent) em.getPayload()).getBillingAccountId()).isEqualTo(ACCOUNT_ID);
-            assertThat(((InvoiceCreatedEvent) em.getPayload()).getCreationTime()).isNotNull();
-            assertThat(((InvoiceCreatedEvent) em.getPayload()).getInvoiceAmount()).isEqualTo(INVOICE_AMOUNT);
+            assertThat(em.getPayloadType()).isEqualTo(InvoiceCreated.class);
+            assertThat(((InvoiceCreated) em.getPayload()).getInvoiceId()).isNotNull();
+            assertThat(((InvoiceCreated) em.getPayload()).getBillingAccountId()).isEqualTo(ACCOUNT_ID);
+            assertThat(((InvoiceCreated) em.getPayload()).getCreationTime()).isNotNull();
+            assertThat(((InvoiceCreated) em.getPayload()).getInvoiceAmount()).isEqualTo(INVOICE_AMOUNT);
             return true;
         });
     }
