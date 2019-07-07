@@ -57,7 +57,7 @@ class BillingAccount {
             throw new IllegalArgumentException("Payoff amount cannot be negative: " + cmd.getPayoffAmount());
         }
         if (isPayoffExceedingBalance(cmd)) {
-            throw new IllegalArgumentException("Payoff amount " + cmd.getPayoffAmount() + " cannot exceed current balance: " + cmd.getPayoffAmount());
+            throw new IllegalArgumentException("Payoff amount " + cmd.getPayoffAmount() + " cannot exceed current balance: " + balance);
         }
 
         AggregateLifecycle.apply(new BillingAccountDonated(cmd.getBillingAccountId(), cmd.getPayoffAmount()));

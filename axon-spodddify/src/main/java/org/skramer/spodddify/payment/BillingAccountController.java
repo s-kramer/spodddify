@@ -49,9 +49,9 @@ class BillingAccountController {
     }
 
     @PostMapping("/billing-account/{billingAccountId}/payoff")
-    void payOff(@PathVariable("billingAccountId") String billingAccountId, @RequestBody PayOffBillingAccountRequest payOffBillingAccountRequest) {
+    CompletableFuture<?> payOff(@PathVariable("billingAccountId") String billingAccountId, @RequestBody PayOffBillingAccountRequest payOffBillingAccountRequest) {
         log.info("Paying off balance for account: {}", billingAccountId);
-        commandGateway.send(new PayoffBillingAccount(billingAccountId, payOffBillingAccountRequest.getPayoffAmount()));
+        return commandGateway.send(new PayoffBillingAccount(billingAccountId, payOffBillingAccountRequest.getPayoffAmount()));
     }
 
 }
