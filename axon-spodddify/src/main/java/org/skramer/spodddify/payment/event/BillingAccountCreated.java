@@ -9,4 +9,5 @@ public class BillingAccountCreated {
     private String accountId;
     private long balance;
     private PaymentPlan paymentPlan;
+    private String listenerId;
 }

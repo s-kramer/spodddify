@@ -6,7 +6,6 @@ import org.axonframework.commandhandling.gateway.CommandGateway;
 import org.axonframework.messaging.responsetypes.ResponseTypes;
 import org.axonframework.queryhandling.QueryGateway;
 import org.skramer.spodddify.payment.command.ChargeBillingAccount;
-import org.skramer.spodddify.payment.command.CreateBillingAccount;
 import org.skramer.spodddify.payment.command.PayoffBillingAccount;
 import org.skramer.spodddify.payment.query.BillingAccountBalanceQuery;
 import org.springframework.http.MediaType;
@@ -28,13 +27,13 @@ class BillingAccountController {
     private final QueryGateway queryGateway;
     private final CommandGateway commandGateway;
 
-    @PostMapping(value = "/billing-account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    CompletableFuture<?> createBillingAccount(@RequestBody CreateBillingAccountRequest createBillingAccountRequest) {
-        log.info("Creating account for request: {}", createBillingAccountRequest);
-        return commandGateway.send(new CreateBillingAccount(createBillingAccountRequest.getPaymentPlan()))
-                .thenApply(o -> (String) o)
-                .thenApply(CreateBillingAccountResponse::new);
-    }
+//    @PostMapping(value = "/billing-account", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+//    CompletableFuture<?> createBillingAccount(@RequestBody CreateBillingAccountRequest createBillingAccountRequest) {
+//        log.info("Creating account for request: {}", createBillingAccountRequest);
+//        return commandGateway.send(new CreateBillingAccount(createBillingAccountRequest.getPaymentPlan()))
+//                .thenApply(o -> (String) o)
+//                .thenApply(CreateBillingAccountResponse::new);
+//    }
 
     @PostMapping("/billing-account/{billingAccountId}/charge")
     CompletableFuture<BillingAccountChargedModel> chargeAccount(@PathVariable("billingAccountId") String billingAccountId) {

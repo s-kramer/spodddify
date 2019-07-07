@@ -15,9 +15,12 @@ public class CreateBillingAccount {
     private final String billingAccountId;
     @NonNull
     private final PaymentPlan paymentPlan;
+    @NonNull
+    private final String listenerId;
 
-    public CreateBillingAccount(PaymentPlan paymentPlan) {
+    public CreateBillingAccount(String listenerId, PaymentPlan paymentPlan) {
         billingAccountId = UUID.randomUUID().toString();
         this.paymentPlan = paymentPlan;
+        this.listenerId = listenerId;
     }
 }

@@ -13,6 +13,7 @@ import org.skramer.spodddify.payment.domain.PaymentPlan;
 import org.skramer.spodddify.payment.event.BillingAccountCharged;
 import org.skramer.spodddify.payment.event.BillingAccountCreated;
 import org.skramer.spodddify.payment.event.BillingAccountDonated;
+import org.skramer.spodddify.payment.event.PaymentMissing;
 import org.skramer.spodddify.payment.event.PaymentPlanChanged;
 
 import lombok.AccessLevel;
@@ -35,10 +36,11 @@ class BillingAccount {
     private String accountId;
     private long balance;
     private PaymentPlan paymentPlan;
+    private String listenerId;
 
     @CommandHandler
     public BillingAccount(CreateBillingAccount cmd) {
-        AggregateLifecycle.apply(new BillingAccountCreated(cmd.getBillingAccountId(), INITIAL_ACCOUNT_BALANCE, cmd.getPaymentPlan()));
+        AggregateLifecycle.apply(new BillingAccountCreated(cmd.getBillingAccountId(), INITIAL_ACCOUNT_BALANCE, cmd.getPaymentPlan(), cmd.getListenerId()));
     }
 
     @CommandHandler
@@ -76,12 +78,17 @@ class BillingAccount {
         accountId = evt.getAccountId();
         balance = evt.getBalance();
         paymentPlan = evt.getPaymentPlan();
+        listenerId = evt.getListenerId();
     }
 
     @EventHandler
     private void on(BillingAccountCharged evt) {
         log.info("Charging billing account {}: {}", accountId, evt.getChargeAmount());
         balance -= evt.getChargeAmount();
+
+        if (balance < paymentPlan.getFee() * 3) {
+            AggregateLifecycle.apply(new PaymentMissing(listenerId, accountId));
+        }
     }
 
     @EventHandler
