@@ -1,0 +1,214 @@
+{
+  "info": {
+    "_postman_id": "0c85ffb9-37b7-43f9-ae14-8833e640df2a",
+    "name": "spodddify",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "create billing account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "0b27e068-ec86-42d2-b275-b7522b203c26",
+            "type": "text/javascript",
+            "exec": [
+              "var jsonData = JSON.parse(responseBody)",
+              "postman.setEnvironmentVariable(\"billingAccountId\", jsonData.billingAccountId)"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"paymentPlan\": \"PREMIUM\"\n}"
+        },
+        "url": {
+          "raw": "localhost:8080/billing-account",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "billing-account"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "charge billing account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "cc4ac84b-d71b-45a7-8f07-821d58c8c104",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "localhost:8080/billing-account/{{billingAccountId}}/charge",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "billing-account",
+            "{{billingAccountId}}",
+            "charge"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "pay billing account off",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "387762e5-5d85-479b-a336-e509f63e1bf3",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n\t\"payoffAmount\": 400\n}"
+        },
+        "url": {
+          "raw": "localhost:8080/billing-account/{{billingAccountId}}/payoff",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "billing-account",
+            "{{billingAccountId}}",
+            "payoff"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get billing account balance",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "387762e5-5d85-479b-a336-e509f63e1bf3",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "localhost:8080/billing-account/{{billingAccountId}}/balance",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "billing-account",
+            "{{billingAccountId}}",
+            "balance"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "get invoices for billing account",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "id": "387762e5-5d85-479b-a336-e509f63e1bf3",
+            "type": "text/javascript",
+            "exec": [
+              ""
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": ""
+        },
+        "url": {
+          "raw": "localhost:8080/invoice/billingAccount/{{billingAccountId}}/",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "invoice",
+            "billingAccount",
+            "{{billingAccountId}}",
+            ""
+          ]
+        }
+      },
+      "response": []
+    }
+  ]
+}
