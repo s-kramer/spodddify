@@ -25,7 +25,7 @@ class InvoiceProjection {
     @EventHandler
     void on(InvoiceCreated evt) {
         log.info("Creating invoice projection: {}", evt);
-        invoiceRepository.save(new InvoiceEntity(evt.getInvoiceId(), evt.getCreationTime(), evt.getInvoiceAmount(), evt.getBillingAccountId(), INITIAL_PAY_OFF_BALANCE));
+        invoiceRepository.save(new InvoiceEntity(evt.getInvoiceId(), evt.getCreationTime(), evt.getInvoiceAmount(), evt.getListenerId(), INITIAL_PAY_OFF_BALANCE));
     }
 
     @EventHandler
@@ -37,7 +37,7 @@ class InvoiceProjection {
 
     @QueryHandler
     List<InvoiceModel> getAllInvoicesForAccount(GetAllInvoicesForAccount query) {
-        return invoiceRepository.findAllByBillingAccountId(query.getBillingAccountId())
+        return invoiceRepository.findAllByListenerId(query.getListenerId())
                 .stream()
                 .map(InvoiceModel::of)
                 .collect(toList());

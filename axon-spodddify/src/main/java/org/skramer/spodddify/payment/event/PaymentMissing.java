@@ -8,5 +8,4 @@ import lombok.Value;
 public class PaymentMissing {
     @Id
     String listenerId;
-    String billingAccountId;
 }

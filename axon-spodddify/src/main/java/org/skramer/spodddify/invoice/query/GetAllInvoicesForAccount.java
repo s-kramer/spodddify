@@ -4,5 +4,5 @@ import lombok.Value;
 
 @Value
 public class GetAllInvoicesForAccount {
-    private String billingAccountId;
+    private String listenerId;
 }

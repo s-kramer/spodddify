@@ -11,7 +11,7 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-class ExternalEventsHandler {
+class InvoiceExternalEventsHandler {
 
     private CommandGateway commandGateway;
     private UnpaidInvoicesService unpaidInvoicesService;

@@ -1,11 +1,11 @@
-package org.skramer.spodddify.invoice;
+package org.skramer.spodddify.invoice.command;
 
 import org.axonframework.modelling.command.TargetAggregateIdentifier;
 
 import lombok.Value;
 
 @Value
-class PayOffInvoice {
+public class PayOffInvoice {
     @TargetAggregateIdentifier
     String invoiceId;
     long payOffAmount;

@@ -6,6 +6,6 @@ import lombok.Value;
 
 @Value
 public class PaymentPlanChanged {
-    private final String billingAccountId;
+    private final String listenerId;
     private final PaymentPlan newPaymentPlan;
 }

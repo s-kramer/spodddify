@@ -7,6 +7,7 @@ import org.axonframework.eventhandling.EventHandler;
 import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.modelling.command.AggregateRoot;
+import org.axonframework.spring.stereotype.Aggregate;
 import org.skramer.spodddify.listener.command.CreateListener;
 import org.skramer.spodddify.listener.command.PlaySong;
 import org.skramer.spodddify.listener.event.ListenerCreated;
@@ -15,7 +16,7 @@ import org.skramer.spodddify.payment.event.PaymentMissing;
 
 import lombok.extern.slf4j.Slf4j;
 
-@AggregateRoot
+@Aggregate
 @Slf4j
 class Listener {
     @AggregateIdentifier

@@ -6,7 +6,7 @@
   },
   "item": [
     {
-      "name": "create billing account",
+      "name": "create listener",
       "event": [
         {
           "listen": "test",
@@ -15,7 +15,7 @@
             "type": "text/javascript",
             "exec": [
               "var jsonData = JSON.parse(responseBody)",
-              "postman.setEnvironmentVariable(\"billingAccountId\", jsonData.billingAccountId)"
+              "postman.setEnvironmentVariable(\"listenerId\", jsonData.listenerId)"
             ]
           }
         }
@@ -46,7 +46,7 @@
       "response": []
     },
     {
-      "name": "charge billing account",
+      "name": "charge listener",
       "event": [
         {
           "listen": "test",
@@ -72,14 +72,14 @@
           "raw": ""
         },
         "url": {
-          "raw": "localhost:8080/billing-account/{{billingAccountId}}/charge",
+          "raw": "localhost:8080/billing-account/{{listenerId}}/charge",
           "host": [
             "localhost"
           ],
           "port": "8080",
           "path": [
             "billing-account",
-            "{{billingAccountId}}",
+            "{{listenerId}}",
             "charge"
           ]
         }
@@ -87,7 +87,7 @@
       "response": []
     },
     {
-      "name": "pay billing account off",
+      "name": "pay listener off",
       "event": [
         {
           "listen": "test",
@@ -113,14 +113,14 @@
           "raw": "{\n\t\"payoffAmount\": 400\n}"
         },
         "url": {
-          "raw": "localhost:8080/billing-account/{{billingAccountId}}/payoff",
+          "raw": "localhost:8080/billing-account/{{listenerId}}/payoff",
           "host": [
             "localhost"
           ],
           "port": "8080",
           "path": [
             "billing-account",
-            "{{billingAccountId}}",
+            "{{listenerId}}",
             "payoff"
           ]
         }
@@ -128,7 +128,7 @@
       "response": []
     },
     {
-      "name": "get billing account balance",
+      "name": "get listener balance",
       "event": [
         {
           "listen": "test",
@@ -154,14 +154,14 @@
           "raw": ""
         },
         "url": {
-          "raw": "localhost:8080/billing-account/{{billingAccountId}}/balance",
+          "raw": "localhost:8080/billing-account/{{listenerId}}/balance",
           "host": [
             "localhost"
           ],
           "port": "8080",
           "path": [
             "billing-account",
-            "{{billingAccountId}}",
+            "{{listenerId}}",
             "balance"
           ]
         }
@@ -169,7 +169,7 @@
       "response": []
     },
     {
-      "name": "get invoices for billing account",
+      "name": "get invoices for listener",
       "event": [
         {
           "listen": "test",
@@ -195,7 +195,7 @@
           "raw": ""
         },
         "url": {
-          "raw": "localhost:8080/invoice/billingAccount/{{billingAccountId}}/",
+          "raw": "localhost:8080/invoice/billingAccount/{{listenerId}}/",
           "host": [
             "localhost"
           ],
@@ -203,7 +203,7 @@
           "path": [
             "invoice",
             "billingAccount",
-            "{{billingAccountId}}",
+            "{{listenerId}}",
             ""
           ]
         }

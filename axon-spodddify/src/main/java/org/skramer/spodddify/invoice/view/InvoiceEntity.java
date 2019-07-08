@@ -19,7 +19,7 @@ public class InvoiceEntity {
     private String invoiceId;
     private Instant creationTime;
     private long amount;
-    private String billingAccountId;
+    private String listenerId;
     @Wither
     private long paidOffAmount;
 }

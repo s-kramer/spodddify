@@ -7,6 +7,6 @@ import lombok.Value;
 @Value
 public class BillingAccountDonated {
     @Id
-    String billingAccountId;
+    String listenerId;
     long payoffAmount;
 }

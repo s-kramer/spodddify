@@ -18,7 +18,7 @@ import org.skramer.spodddify.invoice.event.InvoiceCreated;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class InvoiceTest {
-    private static final String ACCOUNT_ID = "dummyBillingAccountId";
+    private static final String ACCOUNT_ID = "dummyListenerId";
     private static final long INVOICE_AMOUNT = 100;
     private FixtureConfiguration<Invoice> fixture;
 
@@ -32,7 +32,7 @@ public class InvoiceTest {
 
         final CommandBus commandBus = fixture.getCommandBus();
         DefaultCommandGateway commandGateway = DefaultCommandGateway.builder().commandBus(commandBus).build();
-        fixture.registerInjectableResource(new ExternalEventsHandler(commandGateway, unpaidInvoicesService));
+        fixture.registerInjectableResource(new InvoiceExternalEventsHandler(commandGateway, unpaidInvoicesService));
     }
 
     @Test
@@ -42,7 +42,7 @@ public class InvoiceTest {
                 .expectEventsMatching(exactSequenceOf(invoiceWithId(), andNoMore()))
                 .expectState(invoice -> {
                     assertThat(invoice.getInvoiceId()).isNotNull();
-                    assertThat(invoice.getBillingAccountId()).isEqualTo(ACCOUNT_ID);
+                    assertThat(invoice.getListenerId()).isEqualTo(ACCOUNT_ID);
                     assertThat(invoice.getCreationTime()).isNotNull();
                     assertThat(invoice.getAmount()).isEqualTo(INVOICE_AMOUNT);
                 });
@@ -53,7 +53,7 @@ public class InvoiceTest {
             assertThat(em.getIdentifier()).isNotNull();
             assertThat(em.getPayloadType()).isEqualTo(InvoiceCreated.class);
             assertThat(((InvoiceCreated) em.getPayload()).getInvoiceId()).isNotNull();
-            assertThat(((InvoiceCreated) em.getPayload()).getBillingAccountId()).isEqualTo(ACCOUNT_ID);
+            assertThat(((InvoiceCreated) em.getPayload()).getListenerId()).isEqualTo(ACCOUNT_ID);
             assertThat(((InvoiceCreated) em.getPayload()).getCreationTime()).isNotNull();
             assertThat(((InvoiceCreated) em.getPayload()).getInvoiceAmount()).isEqualTo(INVOICE_AMOUNT);
             return true;

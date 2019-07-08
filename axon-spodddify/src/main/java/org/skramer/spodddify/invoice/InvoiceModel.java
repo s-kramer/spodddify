@@ -9,12 +9,12 @@ import lombok.Value;
 @Value
 class InvoiceModel {
     private String invoiceId;
-    private String billingAccountId;
+    private String listenerId;
     private Instant creationTime;
     private long amount;
     private long paidAmount;
 
     static InvoiceModel of(InvoiceEntity entity) {
-        return new InvoiceModel(entity.getInvoiceId(), entity.getBillingAccountId(), entity.getCreationTime(), entity.getAmount(), entity.getPaidOffAmount());
+        return new InvoiceModel(entity.getInvoiceId(), entity.getListenerId(), entity.getCreationTime(), entity.getAmount(), entity.getPaidOffAmount());
     }
 }

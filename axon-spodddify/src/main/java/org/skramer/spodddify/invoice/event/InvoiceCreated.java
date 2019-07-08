@@ -10,7 +10,7 @@ public class InvoiceCreated {
     @NonNull
     private final String invoiceId;
     @NonNull
-    private final String billingAccountId;
+    private final String listenerId;
     @NonNull
     private final Instant creationTime;
 

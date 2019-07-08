@@ -6,8 +6,7 @@ import lombok.Value;
 
 @Value
 public class BillingAccountCreated {
-    private String accountId;
+    private String listenerId;
     private long balance;
     private PaymentPlan paymentPlan;
-    private String listenerId;
 }

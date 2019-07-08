@@ -7,5 +7,5 @@ import lombok.Value;
 @Value
 public class ChargeBillingAccount {
     @TargetAggregateIdentifier
-    private final String billingAccountId;
+    private final String listenerId;
 }

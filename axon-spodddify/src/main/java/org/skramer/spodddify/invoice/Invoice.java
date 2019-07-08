@@ -8,6 +8,7 @@ import org.axonframework.modelling.command.AggregateIdentifier;
 import org.axonframework.modelling.command.AggregateLifecycle;
 import org.axonframework.spring.stereotype.Aggregate;
 import org.skramer.spodddify.invoice.command.CreateInvoice;
+import org.skramer.spodddify.invoice.command.PayOffInvoice;
 import org.skramer.spodddify.invoice.event.InvoiceCreated;
 
 import lombok.AccessLevel;
@@ -28,12 +29,12 @@ class Invoice {
     private String invoiceId;
     private Instant creationTime;
     private long amount;
-    private String billingAccountId;
+    private String listenerId;
     private long payoffAmount;
 
     @CommandHandler
     public Invoice(CreateInvoice cmd) {
-        AggregateLifecycle.apply(new InvoiceCreated(cmd.getInvoiceId(), cmd.getBillingAccountId(), Instant.now(), cmd.getInvoiceAmount()));
+        AggregateLifecycle.apply(new InvoiceCreated(cmd.getInvoiceId(), cmd.getListenerId(), Instant.now(), cmd.getInvoiceAmount()));
     }
 
     @CommandHandler
@@ -48,7 +49,7 @@ class Invoice {
         this.invoiceId = evt.getInvoiceId();
         this.creationTime = evt.getCreationTime();
         this.amount = evt.getInvoiceAmount();
-        this.billingAccountId = evt.getBillingAccountId();
+        this.listenerId = evt.getListenerId();
     }
 
     @EventHandler

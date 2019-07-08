@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.axonframework.commandhandling.gateway.CommandGateway;
+import org.skramer.spodddify.invoice.command.PayOffInvoice;
 import org.skramer.spodddify.invoice.view.InvoiceEntity;
 import org.skramer.spodddify.invoice.view.InvoiceRepository;
 import org.skramer.spodddify.payment.event.BillingAccountDonated;
@@ -21,8 +22,8 @@ class UnpaidInvoicesService {
     private final CommandGateway commandGateway;
 
     void payUnpaidInvoices(BillingAccountDonated evt) {
-        final List<InvoiceEntity> unpaidInvoices = invoiceRepository.findAllByBillingAccountIdAndPaidOffAmountNotEqualAmount(evt.getBillingAccountId());
-        log.debug("Fetched unpaid invoices for billing account {}: {}", evt.getBillingAccountId(), unpaidInvoices);
+        final List<InvoiceEntity> unpaidInvoices = invoiceRepository.findAllByListenerIdAndPaidOffAmountNotEqualAmount(evt.getListenerId());
+        log.debug("Fetched unpaid invoices for listener {}: {}", evt.getListenerId(), unpaidInvoices);
 
         final Map<String, Long> invoicePayments = invoicePaymentService.splitBillingAccountInvoicePayments(evt.getPayoffAmount(), unpaidInvoices);
         log.debug("Split amount {} between unpaid invoices: {}", evt.getPayoffAmount(), invoicePayments);

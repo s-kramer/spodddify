@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 class PayoffBillingAccountResponse {
-    String billingAccountId;
+    String listenerId;
     long remainingAmount;
 }

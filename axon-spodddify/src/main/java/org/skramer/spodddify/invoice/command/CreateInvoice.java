@@ -11,12 +11,12 @@ public class CreateInvoice {
 
     @TargetAggregateIdentifier
     String invoiceId;
-    String billingAccountId;
+    String listenerId;
     long invoiceAmount;
 
-    public CreateInvoice(String billingAccountId, long invoiceAmount) {
+    public CreateInvoice(String listenerId, long invoiceAmount) {
         invoiceId = UUID.randomUUID().toString();
-        this.billingAccountId = billingAccountId;
+        this.listenerId = listenerId;
         this.invoiceAmount = invoiceAmount;
     }
 }

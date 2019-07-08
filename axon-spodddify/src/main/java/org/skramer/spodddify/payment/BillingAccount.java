@@ -36,11 +36,10 @@ class BillingAccount {
     private String accountId;
     private long balance;
     private PaymentPlan paymentPlan;
-    private String listenerId;
 
     @CommandHandler
     public BillingAccount(CreateBillingAccount cmd) {
-        AggregateLifecycle.apply(new BillingAccountCreated(cmd.getBillingAccountId(), INITIAL_ACCOUNT_BALANCE, cmd.getPaymentPlan(), cmd.getListenerId()));
+        AggregateLifecycle.apply(new BillingAccountCreated(cmd.getListenerId(), INITIAL_ACCOUNT_BALANCE, cmd.getPaymentPlan()));
     }
 
     @CommandHandler
@@ -50,7 +49,7 @@ class BillingAccount {
 
     @CommandHandler
     private void on(ChangePaymentPlan cmd) {
-        AggregateLifecycle.apply(new PaymentPlanChanged(cmd.getBillingAccountId(), cmd.getNewPaymentPlan()));
+        AggregateLifecycle.apply(new PaymentPlanChanged(cmd.getListenerId(), cmd.getNewPaymentPlan()));
     }
 
     @CommandHandler
@@ -62,7 +61,7 @@ class BillingAccount {
             throw new IllegalArgumentException("Payoff amount " + cmd.getPayoffAmount() + " cannot exceed current balance: " + balance);
         }
 
-        AggregateLifecycle.apply(new BillingAccountDonated(cmd.getBillingAccountId(), cmd.getPayoffAmount()));
+        AggregateLifecycle.apply(new BillingAccountDonated(cmd.getListenerId(), cmd.getPayoffAmount()));
     }
 
     private boolean isPayoffExceedingBalance(PayoffBillingAccount cmd) {
@@ -75,31 +74,30 @@ class BillingAccount {
 
     @EventHandler
     private void on(BillingAccountCreated evt) {
-        accountId = evt.getAccountId();
+        accountId = evt.getListenerId();
         balance = evt.getBalance();
         paymentPlan = evt.getPaymentPlan();
-        listenerId = evt.getListenerId();
     }
 
     @EventHandler
     private void on(BillingAccountCharged evt) {
-        log.info("Charging billing account {}: {}", accountId, evt.getChargeAmount());
+        log.info("Charging listener {}: {}", accountId, evt.getChargeAmount());
         balance -= evt.getChargeAmount();
 
-        if (balance < paymentPlan.getFee() * 3) {
-            AggregateLifecycle.apply(new PaymentMissing(listenerId, accountId));
+        if (Math.abs(balance) > paymentPlan.getFee() * 3) {
+            AggregateLifecycle.apply(new PaymentMissing(accountId));
         }
     }
 
     @EventHandler
     private void on(PaymentPlanChanged evt) {
-        log.info("Changing plan for billing account {}: {}", accountId, evt.getNewPaymentPlan());
+        log.info("Changing plan for listener {}: {}", accountId, evt.getNewPaymentPlan());
         paymentPlan = evt.getNewPaymentPlan();
     }
 
     @EventHandler
     private void on(BillingAccountDonated evt) {
-        log.info("Paying off billing account {}: {}", accountId, evt.getPayoffAmount());
+        log.info("Paying off listener {}: {}", accountId, evt.getPayoffAmount());
         balance += evt.getPayoffAmount();
     }
 }

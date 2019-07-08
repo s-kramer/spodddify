@@ -7,6 +7,6 @@ import lombok.Value;
 @Value
 public class PayoffBillingAccount {
     @TargetAggregateIdentifier
-    String billingAccountId;
+    String listenerId;
     long payoffAmount;
 }

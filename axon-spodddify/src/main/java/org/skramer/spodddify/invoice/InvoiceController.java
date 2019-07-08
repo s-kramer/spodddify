@@ -19,9 +19,9 @@ import lombok.extern.slf4j.Slf4j;
 class InvoiceController {
     private final QueryGateway queryGateway;
 
-    @GetMapping("/invoice/billingAccount/{billingAccountId}")
-    CompletableFuture<List<InvoiceModel>> getInvoicesForBillingAccount(@PathVariable("billingAccountId") String billingAccountId) {
-        return queryGateway.query(new GetAllInvoicesForAccount(billingAccountId), ResponseTypes.multipleInstancesOf(InvoiceModel.class));
+    @GetMapping("/invoice/billingAccount/{listenerId}")
+    CompletableFuture<List<InvoiceModel>> getInvoicesForBillingAccount(@PathVariable("listenerId") String listenerId) {
+        return queryGateway.query(new GetAllInvoicesForAccount(listenerId), ResponseTypes.multipleInstancesOf(InvoiceModel.class));
     }
 
 }

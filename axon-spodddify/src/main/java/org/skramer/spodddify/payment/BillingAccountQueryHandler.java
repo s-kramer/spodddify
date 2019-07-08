@@ -19,7 +19,7 @@ class BillingAccountQueryHandler {
 
     @QueryHandler
     private CompletableFuture<BillingAccountBalance> getBalance(BillingAccountBalanceQuery query) {
-        final Aggregate<BillingAccount> result = repository.load(query.getBillingAccountId());
+        final Aggregate<BillingAccount> result = repository.load(query.getListenerId());
         final Long balance = result.invoke(BillingAccount::getBalance);
         CompletableFuture<BillingAccountBalance> billingAccountCompletableFuture = new CompletableFuture<>();
         billingAccountCompletableFuture.complete(new BillingAccountBalance(result.identifierAsString(), balance));

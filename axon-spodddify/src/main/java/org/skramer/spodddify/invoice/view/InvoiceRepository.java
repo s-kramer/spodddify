@@ -8,8 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InvoiceRepository extends CrudRepository<InvoiceEntity, String> {
-    List<InvoiceEntity> findAllByBillingAccountId(String billingAccountId);
+    List<InvoiceEntity> findAllByListenerId(String listenerId);
 
     @Query("SELECT i FROM InvoiceEntity i WHERE i.paidOffAmount < i.amount ORDER BY i.creationTime")
-    List<InvoiceEntity> findAllByBillingAccountIdAndPaidOffAmountNotEqualAmount(String billingAccountId);
+    List<InvoiceEntity> findAllByListenerIdAndPaidOffAmountNotEqualAmount(String listenerId);
 }

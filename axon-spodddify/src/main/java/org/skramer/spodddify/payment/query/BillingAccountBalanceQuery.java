@@ -7,5 +7,5 @@ import lombok.Value;
 @Value
 public class BillingAccountBalanceQuery {
     @Id
-    private String billingAccountId;
+    private String listenerId;
 }

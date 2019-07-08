@@ -35,22 +35,22 @@ class BillingAccountController {
 //                .thenApply(CreateBillingAccountResponse::new);
 //    }
 
-    @PostMapping("/billing-account/{billingAccountId}/charge")
-    CompletableFuture<BillingAccountChargedModel> chargeAccount(@PathVariable("billingAccountId") String billingAccountId) {
-        log.info("charging account {}", billingAccountId);
-        return commandGateway.send(new ChargeBillingAccount(billingAccountId));
+    @PostMapping("/billing-account/{listenerId}/charge")
+    CompletableFuture<BillingAccountChargedModel> chargeAccount(@PathVariable("listenerId") String listenerId) {
+        log.info("charging account {}", listenerId);
+        return commandGateway.send(new ChargeBillingAccount(listenerId));
     }
 
-    @GetMapping("/billing-account/{billingAccountId}/balance")
-    CompletableFuture<BillingAccountBalance> getBalance(@PathVariable("billingAccountId") String billingAccountId) {
-        log.info("checking balance for account: {}", billingAccountId);
-        return queryGateway.query(new BillingAccountBalanceQuery(billingAccountId), ResponseTypes.instanceOf(BillingAccountBalance.class));
+    @GetMapping("/billing-account/{listenerId}/balance")
+    CompletableFuture<BillingAccountBalance> getBalance(@PathVariable("listenerId") String listenerId) {
+        log.info("checking balance for account: {}", listenerId);
+        return queryGateway.query(new BillingAccountBalanceQuery(listenerId), ResponseTypes.instanceOf(BillingAccountBalance.class));
     }
 
-    @PostMapping("/billing-account/{billingAccountId}/payoff")
-    CompletableFuture<?> payOff(@PathVariable("billingAccountId") String billingAccountId, @RequestBody PayOffBillingAccountRequest payOffBillingAccountRequest) {
-        log.info("Paying off balance for account: {}", billingAccountId);
-        return commandGateway.send(new PayoffBillingAccount(billingAccountId, payOffBillingAccountRequest.getPayoffAmount()));
+    @PostMapping("/billing-account/{listenerId}/payoff")
+    CompletableFuture<?> payOff(@PathVariable("listenerId") String listenerId, @RequestBody PayOffBillingAccountRequest payOffBillingAccountRequest) {
+        log.info("Paying off balance for account: {}", listenerId);
+        return commandGateway.send(new PayoffBillingAccount(listenerId, payOffBillingAccountRequest.getPayoffAmount()));
     }
 
 }

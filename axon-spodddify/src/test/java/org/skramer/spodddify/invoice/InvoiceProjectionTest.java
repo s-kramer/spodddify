@@ -20,7 +20,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 public class InvoiceProjectionTest {
     private static final int INVOICE_AMOUNT = 1000;
-    private static final String BILLING_ACCOUNT_ID = "billingAccountId";
+    private static final String BILLING_ACCOUNT_ID = "listenerId";
     private static final String INVOICE_ID = "invoiceId";
     private static final long INITIAL_PAYOFF_AMOUNT = 0L;
 

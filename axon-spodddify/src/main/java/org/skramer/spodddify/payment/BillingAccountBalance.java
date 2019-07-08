@@ -4,6 +4,6 @@ import lombok.Value;
 
 @Value
 class BillingAccountBalance {
-    private String billingAccountId;
+    private String listenerId;
     private long balance;
 }

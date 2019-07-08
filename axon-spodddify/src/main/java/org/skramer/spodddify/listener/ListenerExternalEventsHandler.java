@@ -10,13 +10,12 @@ import lombok.AllArgsConstructor;
 
 @Component
 @AllArgsConstructor
-class ExternalEventsHandler {
+class ListenerExternalEventsHandler {
 
     private CommandGateway commandGateway;
 
     @EventHandler
     void on(ListenerCreated evt) {
-        // TODO: emit this command from Listener's constructor to obtain billingAccountId? Or merge the IDs?
         commandGateway.send(new CreateBillingAccount(evt.getListenerId(), evt.getPaymentPlan()));
     }
 
